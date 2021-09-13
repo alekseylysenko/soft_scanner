@@ -4,7 +4,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.CAMERA"/>
    <application
-        android:label="soft_scanner"
+        android:label="Мой Рюкзак"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

@@ -51,7 +51,7 @@ class _AddToBagScreenState extends State<AddToBagScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(title: Text("Мой рюкзак")),
         body: ValueListenableBuilder<Box<Equipment>>(
           valueListenable: Boxes.getEquipment().listenable(),
           builder: (context, box, _) {

@@ -43,6 +43,7 @@ const _permissionGroup = const [PermissionGroup.Camera, PermissionGroup.Photos];
 
 class _MyAppState extends State<MyApp> {
   late FlutterScankit scanKit;
+  final _formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
   final codeController = TextEditingController();
   String code = "";
@@ -89,43 +90,51 @@ class _MyAppState extends State<MyApp> {
         floatingActionButton: FloatButton(),
         body: Center(
           child: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextFieldName(nameController: nameController),
-                SizedBox(
-                  height: 32,
-                ),
-                Container(
-                  padding: EdgeInsets.only(right: 40, left: 40),
-                  child: TextField(
-                      autofocus: true,
-                      controller: codeController,
-                      onChanged: (text) {
-                        context.read<BarCodeProvider>().mutationCode(text);
-                      },
-                      decoration: InputDecoration(
-                          helperText: "Введите серийный номер устройства",
-                          hintText: "S/N")),
-                ),
-                SizedBox(height: 32),
-                ElevatedButton(
-                  child: Text("Сканировать штрих-код"),
-                  onPressed: () async {
-                    if (!await FlutterEasyPermission.has(
-                        perms: _permissions, permsGroup: _permissionGroup)) {
-                      FlutterEasyPermission.request(
-                          perms: _permissions, permsGroup: _permissionGroup);
-                    } else {
-                      startScan();
-                    }
-                  },
-                ),
-                SizedBox(height: 32),
-                SendButtonWidget(
-                    codeController: codeController,
-                    nameController: nameController)
-              ],
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextFieldName(nameController: nameController),
+                  SizedBox(
+                    height: 32,
+                  ),
+                  Container(
+                    padding: EdgeInsets.only(right: 40, left: 40),
+                    child: TextFormField(
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                          return 'Пожалуйста введите серийный номер';}
+                          },
+                        autofocus: true,
+                        controller: codeController,
+                        onChanged: (text) {
+                          context.read<BarCodeProvider>().mutationCode(text);
+                        },
+                        decoration: InputDecoration(
+                            helperText: "Введите серийный номер устройства",
+                            hintText: "S/N")),
+                  ),
+                  SizedBox(height: 32),
+                  ElevatedButton(
+                    child: Text("Сканировать штрих-код"),
+                    onPressed: () async {
+                      if (!await FlutterEasyPermission.has(
+                          perms: _permissions, permsGroup: _permissionGroup)) {
+                        FlutterEasyPermission.request(
+                            perms: _permissions, permsGroup: _permissionGroup);
+                      } else {
+                        startScan();
+                      }
+                    },
+                  ),
+                  SizedBox(height: 32),
+                  SendButtonWidget(
+                      codeController: codeController,
+                      nameController: nameController,
+                      formKey: _formKey)
+                ],
+              ),
             ),
           ),
         ),
@@ -165,11 +174,15 @@ class TextFieldName extends StatelessWidget {
             context.watch<BarCodeProvider>().newCode.length > 7
         ? Container(
             padding: EdgeInsets.only(right: 40, left: 40),
-            child: TextField(
+            child: TextFormField(
               controller: nameController,
               onChanged: (text) {
                 context.read<BarCodeProvider>().mutationName(text);
               },
+              validator: (text) {
+                        if (text == null || text.isEmpty) {
+                        return 'Это тоже нужно заполнить';}
+                        },
               decoration: InputDecoration(
                   helperText: "Введите название устройства",
                   hintText: "Название"),
@@ -182,8 +195,9 @@ class TextFieldName extends StatelessWidget {
 class SendButtonWidget extends StatefulWidget {
   final TextEditingController codeController;
   final TextEditingController nameController;
+  final GlobalKey<FormState> formKey;
   SendButtonWidget(
-      {required this.codeController, required this.nameController});
+      {required this.codeController, required this.nameController, required this.formKey});
 
   @override
   _SendButtonWidgetState createState() => _SendButtonWidgetState();
@@ -209,11 +223,12 @@ class _SendButtonWidgetState extends State<SendButtonWidget> {
             context.watch<BarCodeProvider>().newCode.length > 7
         ? ElevatedButton(
             onPressed: () {
+              if(widget.formKey.currentState!.validate()){
               addEquipment(
                   BarCodeProvider().newName, BarCodeProvider().newCode);
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => AddToBagScreen()));
-            },
+            } },
             child: Text("Добавить в рюкзак"))
         : Container();
   }
