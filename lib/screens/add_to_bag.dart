@@ -20,6 +20,34 @@ class _AddToBagScreenState extends State<AddToBagScreen> {
     //setState(() => transactions.remove(transaction));
   }
 
+  void _showSimpleDialog(equipmentSingle) {
+    showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title:
+              Text('Вы действительно хотите удалить оборудование из рюкзака?'),
+          content: const Text(''),
+          actions: <Widget>[
+            ElevatedButton(
+              child: Text('Отмена'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            ElevatedButton(
+              child: Text('Удалить'),
+              onPressed: () {
+                deleteEquipment(equipmentSingle);
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,12 +80,13 @@ class _AddToBagScreenState extends State<AddToBagScreen> {
                                 child: Container(
                                     padding: EdgeInsets.only(
                                         left: 10, top: 5, bottom: 5),
-                                    child: SelectableText(equipmentSingle.code)
-                                )
-                            )
+                                    child:
+                                        SelectableText(equipmentSingle.code)))
                           ],
                         ),
-                        SizedBox(height:7,),
+                        SizedBox(
+                          height: 7,
+                        ),
                         Row(
                           children: [
                             Expanded(
@@ -74,7 +103,9 @@ class _AddToBagScreenState extends State<AddToBagScreen> {
                                     child: Text(equipmentSingle.name)))
                           ],
                         ),
-                        SizedBox(height:7,),
+                        SizedBox(
+                          height: 7,
+                        ),
                         Row(
                           children: [
                             Expanded(
@@ -101,26 +132,21 @@ class _AddToBagScreenState extends State<AddToBagScreen> {
                         ),
                         Row(
                           children: [
-                          
-                            
-                            
-                                Expanded(
-                                  flex: 6,
-                                  child: Container(),
+                            Expanded(
+                              flex: 6,
+                              child: Container(),
+                            ),
+                            Expanded(
+                              flex: 4,
+                              child: Container(
+                                child: TextButton(
+                                  child: Text("Удалить"),
+                                  onPressed: () {
+                                    _showSimpleDialog(equipmentSingle);
+                                  },
                                 ),
-                                Expanded(
-                                  flex:4,
-                                  child: Container(
-                                    
-                                    child: TextButton(
-                                        child: Text("Удалить"),
-                                        onPressed: () {
-                                        deleteEquipment(equipmentSingle);
-                                      },
-                                    ),
-                                  ),
-                                ),
-                             
+                              ),
+                            ),
                           ],
                         )
                       ],
