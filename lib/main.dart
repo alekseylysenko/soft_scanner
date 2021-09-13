@@ -84,8 +84,9 @@ class _MyAppState extends State<MyApp> {
       home: Scaffold(
         appBar: AppBar(
           title: Container(
-              alignment: Alignment.centerRight, child: Text('Мой рюкзак')),
+              child: Text('Мой рюкзак')),
         ),
+        floatingActionButton: FloatButton(),
         body: Center(
           child: SingleChildScrollView(
             child: Column(
@@ -121,12 +122,31 @@ class _MyAppState extends State<MyApp> {
                   },
                 ),
                 SizedBox(height: 32),
-                SendButtonWidget(codeController: codeController, nameController: nameController)
+                SendButtonWidget(
+                    codeController: codeController,
+                    nameController: nameController)
               ],
             ),
           ),
         ),
       ),
+    );
+  }
+}
+
+class FloatButton extends StatelessWidget {
+  const FloatButton({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton(
+      child: Icon(Icons.business_center),
+      onPressed: () {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => AddToBagScreen()));
+      },
     );
   }
 }
@@ -162,7 +182,8 @@ class TextFieldName extends StatelessWidget {
 class SendButtonWidget extends StatefulWidget {
   final TextEditingController codeController;
   final TextEditingController nameController;
-  SendButtonWidget({required this.codeController, required this.nameController});
+  SendButtonWidget(
+      {required this.codeController, required this.nameController});
 
   @override
   _SendButtonWidgetState createState() => _SendButtonWidgetState();
