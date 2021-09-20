@@ -3,7 +3,6 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:soft_scanner/models/equipment.dart';
-import 'package:soft_scanner/screens/history_screen.dart';
 import 'package:soft_scanner/widget/boxes.dart';
 
 class BagScreen extends StatefulWidget {
@@ -16,7 +15,7 @@ class BagScreen extends StatefulWidget {
 class _BagScreenState extends State<BagScreen> {
   final numberController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-
+  
   void editEquipment(Equipment equipment, int applicationNumber) {
     // Рекдактирование Оборудования
 
@@ -29,6 +28,7 @@ class _BagScreenState extends State<BagScreen> {
 
     equipment.save();
   }
+  @override
 
   void _showSimpleDialog(equipmentSingle) {
     showDialog<void>(
@@ -66,15 +66,16 @@ class _BagScreenState extends State<BagScreen> {
                   if (_formKey.currentState!.validate()) {
                     editEquipment(
                         equipmentSingle, int.parse(numberController.text));
-                    Navigator.of(context).pop();
+                    
                     final snackBar = SnackBar(
                       content: Text('Добавлено в историю'),
-                      action: SnackBarAction(
-                        label: 'Назад',
+                      action: SnackBarAction(   
+                        label: 'X',
                         onPressed: () {},
                       ),
                     );
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    Navigator.of(context).pop();
                   }
                 }),
           ],
@@ -88,7 +89,7 @@ class _BagScreenState extends State<BagScreen> {
     return Scaffold(
         appBar: AppBar(
           title: Text("Мой рюкзак"),
-         
+
         ),
         body: ValueListenableBuilder<Box<Equipment>>(
           valueListenable: Boxes.getEquipment().listenable(),

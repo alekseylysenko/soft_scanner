@@ -9,7 +9,6 @@ import 'package:provider/provider.dart';
 import 'package:soft_scanner/widget/bottom_navigation_bar.dart';
 import 'package:soft_scanner/widget/boxes.dart';
 
-import 'bag_screen.dart';
 
 class AddToBagScreen extends StatefulWidget {
   const AddToBagScreen({Key? key}) : super(key: key);
@@ -183,7 +182,6 @@ class _SendButtonWidgetState extends State<SendButtonWidget> {
       ..dateReceiving = DateTime.now()
       ..dateInstallation = DateTime.now()
       ..deleteEquipment = false;
-
     final box = Boxes.getEquipment();
     box.add(equipment);
   }

@@ -11,9 +11,10 @@ class BottomNavigationBarBag extends StatefulWidget {
 }
 
 class _BottomNavigationBarBagState extends State<BottomNavigationBarBag> {
-  int _currentIndex = 0;
+  int _currentIndex = 0;    
   @override
   Widget build(BuildContext context) {
+    
     final _kTabPages = [BagScreen(), HistoryScreen()];
     final _kBottomNavBarItems = [
       BottomNavigationBarItem(
@@ -22,8 +23,9 @@ class _BottomNavigationBarBagState extends State<BottomNavigationBarBag> {
     ];
 
     final bottomNavBar = BottomNavigationBar(
+
+      currentIndex: _currentIndex, 
       items: _kBottomNavBarItems,
-      currentIndex: _currentIndex,
       type: BottomNavigationBarType.fixed,
       onTap: (int index) {
         setState(() {

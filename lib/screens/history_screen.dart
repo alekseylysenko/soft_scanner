@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
@@ -20,21 +22,24 @@ class _HistoryScreenState extends State<HistoryScreen> {
     equipment.delete();
     //setState(() => transactions.remove(transaction));
   }
-
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: Text("История перемещений"),
         ),
-        body: ValueListenableBuilder<Box<Equipment>>(
+        body: 
+        
+         ValueListenableBuilder<Box<Equipment>>(
             valueListenable: Boxes.getEquipment().listenable(),
             builder: (context, box, _) {
-              final equipment = box.values.toList().cast<Equipment>();
+              final equipment = box.values.toList().cast<Equipment>();           
               return ListView.builder(
                   itemCount: equipment.length,
                   itemBuilder: (context, index) {
                     final equipmentSingle = equipment[index];
+
                     return equipmentSingle.deleteEquipment == true
                         ? Container(
                             padding:

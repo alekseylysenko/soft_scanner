@@ -8,8 +8,10 @@ import 'package:soft_scanner/widget/bottom_navigation_bar.dart';
 
 
 void main() async {
+
   await Hive.initFlutter();
   Hive.registerAdapter(EquipmentAdapter());
+  await Hive.openBox<Equipment>('equipment');
   runApp(
     MultiProvider(
       providers: [
@@ -19,5 +21,5 @@ void main() async {
     ),
   );
 
-  await Hive.openBox<Equipment>('equipment');
+  
 }
