@@ -12,7 +12,7 @@ class Equipment extends HiveObject{
   late final String code; // штрих-код
 
   @HiveField(2)
-  late final int applicationNumber; //Номер заявки
+  late int applicationNumber; //Номер заявки
 
   @HiveField(3)
   DateTime? dateReceiving; //Дата получения оборудования
