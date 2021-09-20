@@ -204,10 +204,5 @@ class _SendButtonWidgetState extends State<SendButtonWidget> {
             child: Text("Добавить в рюкзак"))
         : Container();
   }
-
-  @override
-  void dispose() {
-    Hive.box('equipment').close();
-    super.dispose();
-  }
+  
 }

@@ -208,4 +208,5 @@ class _BagScreenState extends State<BagScreen> {
           },
         ));
   }
+
 }

@@ -22,7 +22,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
     equipment.delete();
     //setState(() => transactions.remove(transaction));
   }
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -181,4 +181,5 @@ class _HistoryScreenState extends State<HistoryScreen> {
                          );
             }));
   }
+ 
 }
