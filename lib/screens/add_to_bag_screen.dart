@@ -79,7 +79,7 @@ class _AddToBagScreenState extends State<AddToBagScreen> {
               }
             }),
         appBar: AppBar(
-          title: Container(child: Text('Мой рюкзак')),
+          title: Container(child: Text('Добавить в рюкзак')),
         ),
         body: Center(
           child: SingleChildScrollView(

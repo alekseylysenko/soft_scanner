@@ -68,7 +68,7 @@ class _BagScreenState extends State<BagScreen> {
                         equipmentSingle, int.parse(numberController.text));
                     Navigator.of(context).pop();
                     final snackBar = SnackBar(
-                      content: Text('Yay! A SnackBar!'),
+                      content: Text('Добавлено в историю'),
                       action: SnackBarAction(
                         label: 'Назад',
                         onPressed: () {},
